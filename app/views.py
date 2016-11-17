@@ -29,6 +29,11 @@ def load_user(id):
     return User.query.get(int(id))
 
 @app.route('/login', methods=['GET', 'POST'])
+
+@app.before_request
+def before_request():
+    g.user = current_user
+
 @oid.loginhandler
 def login():
     if g.user is not None and g.user.is_authenticated:
